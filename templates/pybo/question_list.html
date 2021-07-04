@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>No.</th>
+            <th>Subject</th>
+            <th>Date Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
+            {% for question in question_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+                </td>
+                <td>{{ question.create_date }}</td>
+            </tr>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <tr>
+                <td>There are no questions</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">Post Question</a>
+</div>
+{% endblock %}
