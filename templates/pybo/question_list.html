@@ -4,26 +4,28 @@
 <div class="container my-3">
     <table class="table">
         <thead>
-        <tr class="thead-dark">
+        <tr class="text-center thead-dark">
             <th>No.</th>
-            <th>Subject</th>
+            <th style="width:50%">Subject</th>
+            <th>Author</th>
             <th>Date Created</th>
         </tr>
         </thead>
         <tbody>
         {% if question_list %}
             {% for question in question_list %}
-            <tr>
+            <tr class="text-center">
                 <td>
                 <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
                     {{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}
                 </td>
-                <td>
+                <td class="text-left">
                     <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
                     {% if question.answer_set.count > 0 %}
                     <span class="text-danger small ml-2">[{{ question.answer_set.count }}]</span>
                     {% endif %}
                 </td>
+                <td>{{ question.author.username }}</td>
                 <td>{{ question.create_date }}</td>
             </tr>
             {% endfor %}
