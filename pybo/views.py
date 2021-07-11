@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 from django.http import HttpResponse
@@ -67,3 +68,13 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
+
+@login_required(login_url='common:login')
+def question_modify(request, question_id):
+    """
+    Edit Question
+    """
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.author:
+        messages.error(request, "Not authorized to edit this post");
+        return redirect('pybo:detail', question_id=question.id)
